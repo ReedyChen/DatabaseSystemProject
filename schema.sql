@@ -12,7 +12,7 @@ CREATE TABLE hospital(
 	zipcode INTEGER,
 	phone VARCHAR(11),
 	county_name VARCHAR(255),
- 	PRIMARY KEY (name, measure_name)
+ 	PRIMARY KEY (name)
 );
 
 CREATE TABLE measurement(
