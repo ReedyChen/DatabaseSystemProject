@@ -17,9 +17,9 @@ def hospitalInsert(myDBname):
                 print(error)
                 connection.rollback()
         count = cursor.rowcount
-        print (count, "Record inserted successfully into mobile table")
+        print (count, "Record inserted successfully into hospital table")
     except (Exception, psycopg2.Error) as error :
-        print("Failed to insert record into mobile table", error)
+        print("Failed to insert record into hospital table", error)
     connection.close()
     
 # measurement table insert
@@ -41,18 +41,58 @@ def measurementInsert(myDBname):
                 print(error)
                 connection.rollback()
         count = cursor.rowcount
-        print (count, "Record inserted successfully into mobile table")
+        print (count, "Record inserted successfully into measurement table")
     except (Exception, psycopg2.Error) as error :
-        print("Failed to insert record into mobile table", error)
+        print("Failed to insert record into measurement table", error)
     connection.close()
   
 # state table insert      
 def stateInsert(myDBname):
-    util.raiseNotDefined()
+    try:
+        connection = psycopg2.connect(dbname = myDBname)
+        cursor = connection.cursor()
+        
+        # measurement insert 
+        print(len(state_name))
+        postgres_insert_query = """ INSERT INTO state (name, measure_name, num_of_hosp_worse, num_of_hosp_same, num_of_hosp_better) VALUES (%s,%s,%s,%s,%s)"""
+        for i in range(len(state_name)):
+            
+            try:
+                record_to_insert = (state_name[i], mea _name[i], num_worse[i], num_same[i], num_better[i])
+                cursor.execute(postgres_insert_query, record_to_insert)
+                connection.commit()
+            except(Exception, psycopg2.Error) as error:
+                print(error)
+                connection.rollback()
+        count = cursor.rowcount
+        print (count, "Record inserted successfully into state table")
+    except (Exception, psycopg2.Error) as error :
+        print("Failed to insert record into state table", error)
+    connection.close()
    
 # death table insert      
 def deathInsert(myDBname):
-    util.raiseNotDefined()    
+        try:
+        connection = psycopg2.connect(dbname = myDBname)
+        cursor = connection.cursor()
+        
+        # measurement insert 
+        print(len(cause_name))
+        postgres_insert_query = """ INSERT INTO death (cause_name, year, deaths, age_adjusted_death_rate, state_name) VALUES (%s,%s,%s,%s,%s)"""
+        for i in range(len(state_name)):
+            
+            try:
+                record_to_insert = (cause_name[i], year[i], deaths[i], age_adj_death_rate[i], state_name[i])
+                cursor.execute(postgres_insert_query, record_to_insert)
+                connection.commit()
+            except(Exception, psycopg2.Error) as error:
+                print(error)
+                connection.rollback()
+        count = cursor.rowcount
+        print (count, "Record inserted successfully into death table")
+    except (Exception, psycopg2.Error) as error :
+        print("Failed to insert record into death table", error)
+    connection.close()    
     
     
 with open('Hospital General Information.csv') as csv_file:
@@ -144,6 +184,72 @@ with open('Complications and Deaths - Hospital.csv') as csv_file:
                 elif (i == n10):
                     e_year = row[i].split('/')[-1]
                     ey.append(e_year)                    
+        
+        line_count += 1
+		
+with open('Complications and Deaths - State.csv') as csv_file:
+    csv_reader = csv.reader(csv_file, delimiter=',')
+    line_count = 0
+    state_name, mea_name, num_worse, num_same, num_better= [], [], [], [], []
+    for row in csv_reader:        
+        if line_count == 0:
+            for i in range(len(row)):
+                if (row[i] == "State"):
+                    n1 = i
+                elif (row[i] == "Measure Name"):
+                    n2 = i
+                elif (row[i] == "Number of Hospitals Worse"):
+                    n3 = i
+                elif (row[i] == "Number of Hospitals Same"):
+                    n4 = i
+                elif (row[i] == "Number of Hospitals Better"):
+                    n5 = i    
+        else:
+            
+            for i in range(len(row)):
+                if (i == n1):                    
+                    state_name.append(row[i])      
+                elif (i == n2):
+                    mea_name.append(row[i])    
+                elif (i == n3):
+                    num_worse.append(row[i])    
+                elif (i == n4):
+                    num_same.append(row[i])    
+                elif (i == n5):
+                    num_better.append(row[i])                       
+        
+        line_count += 1
+		
+with open('NCHS_-_Leading_Causes_of_Death__United_States.csv') as csv_file:
+    csv_reader = csv.reader(csv_file, delimiter=',')
+    line_count = 0
+    cause_name, year, deaths, age_adj_death_rate, state_name= [], [], [], [], []
+    for row in csv_reader:        
+        if line_count == 0:
+            for i in range(len(row)):
+                if (row[i] == "Cause Name"):
+                    n1 = i
+                elif (row[i] == "Year"):
+                    n2 = i
+                elif (row[i] == "Deaths"):
+                    n3 = i
+                elif (row[i] == "Age-adjusted Death Rate"):
+                    n4 = i
+                elif (row[i] == "State"):
+                    n5 = i    
+        else:
+            
+            for i in range(len(row)):
+                if (i == n1):                    
+                    cause_name.append(row[i])      
+                elif (i == n2):
+                    year.append(row[i])    
+                elif (i == n3):
+                    deaths.append(row[i])    
+                elif (i == n4):
+                    age_adj_death_rate.append(row[i])    
+                elif (i == n5):
+                    state_name.append(row[i])                       
         
         line_count += 1
 
