@@ -30,11 +30,11 @@ def measurementInsert(myDBname):
 
         # measurement insert 
         print(len(hosp_name))
-        postgres_insert_query = """ INSERT INTO measurement (hospital_name, address, measure_name, measure_id, denominator, score, lower_estimate, higher_estimate, start_year, end_year) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+        postgres_insert_query = """ INSERT INTO measurement (hospital_name, address, measure_name, measure_id, denominator, score, lower_estimate, higher_estimate, start_date, end_date) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
         for i in range(len(hosp_name)):
 
             try:
-                record_to_insert = (hosp_name[i], address2[i], measure_name[i], measure_id[i], denominator[i], score[i], le[i], he[i], sy[i], ey[i])
+                record_to_insert = (hosp_name[i], address2[i], measure_name[i], measure_id[i], denominator[i], score[i], le[i], he[i], sd[i], ed[i])
                 cursor.execute(postgres_insert_query, record_to_insert)
                 connection.commit()
             except(Exception, psycopg2.Error) as error:
@@ -54,10 +54,10 @@ def stateInsert(myDBname):
 
         # measurement insert 
         print(len(state_name))
-        postgres_insert_query = """ INSERT INTO state (name, measure_name, num_of_hosp_worse, num_of_hosp_same, num_of_hosp_better) VALUES (%s,%s,%s,%s,%s)"""
+        postgres_insert_query = """ INSERT INTO state (name, measure_name, num_of_hosp_worse, num_of_hosp_same, num_of_hosp_better, start_date, end_date) VALUES (%s,%s,%s,%s,%s,%s,%s)"""
         for i in range(len(state_name)):
             try:
-                record_to_insert = (state_name1[i], mea_name[i], num_worse[i], num_same[i], num_better[i])
+                record_to_insert = (state_name1[i], mea_name[i], num_worse[i], num_same[i], num_better[i], start_date2[i], end_date2[i])
                 cursor.execute(postgres_insert_query, record_to_insert)
                 connection.commit()
             except(Exception, psycopg2.Error) as error:
@@ -132,7 +132,7 @@ with open('Hospital General Information.csv') as csv_file:
 with open('Complications and Deaths - Hospital.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     line_count = 0
-    hosp_name, address2, measure_name, measure_id, denominator, score, le, he, sy, ey= [], [], [], [], [], [], [], [], [], []
+    hosp_name, address2, measure_name, measure_id, denominator, score, le, he, sd, ed= [], [], [], [], [], [], [], [], [], []
     for row in csv_reader:        
         if line_count == 0:
             for i in range(len(row)):
@@ -178,18 +178,16 @@ with open('Complications and Deaths - Hospital.csv') as csv_file:
                 elif (i == n8):
                     he.append(row[i])    
                 elif (i == n9):
-                    s_year = row[i].split('/')[-1]
-                    sy.append(s_year)    
+                    sd.append(row[i])    
                 elif (i == n10):
-                    e_year = row[i].split('/')[-1]
-                    ey.append(e_year)                    
+                    ed.append(row[i])                    
 
         line_count += 1
 
 with open('Complications and Deaths - State.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     line_count = 0
-    state_name1, mea_name, num_worse, num_same, num_better = [], [], [], [], []
+    state_name1, mea_name, num_worse, num_same, num_better, start_date2, end_date2 = [], [], [], [], [], [], []
     for row in csv_reader:        
         if line_count == 0:
             for i in range(len(row)):
@@ -202,7 +200,11 @@ with open('Complications and Deaths - State.csv') as csv_file:
                 elif (row[i] == "Number of Hospitals Same"):
                     n4 = i
                 elif (row[i] == "Number of Hospitals Better"):
-                    n5 = i    
+                    n5 = i
+				elif (row[i] == "Measure Start Date"):
+                    n6 = i
+                elif (row[i] == "Measure End Date"):
+                    n7 = i  
         else:
 
             for i in range(len(row)):
@@ -215,7 +217,11 @@ with open('Complications and Deaths - State.csv') as csv_file:
                 elif (i == n4):
                     num_same.append(row[i])    
                 elif (i == n5):
-                    num_better.append(row[i])                       
+                    num_better.append(row[i])
+				elif (i == n6):
+                    start_date2.append(row[i])    
+                elif (i == n7):
+                    end_date2.append(row[i])
 
         line_count += 1
 

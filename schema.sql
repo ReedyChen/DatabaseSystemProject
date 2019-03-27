@@ -24,8 +24,8 @@ CREATE TABLE measurement(
 	score FLOAT,
 	lower_estimate FLOAT,
 	higher_estimate FLOAT,
-	start_year INTEGER,
-	end_year INTEGER,
+	start_date TIMESTAMP,
+	end_date TIMESTAMP,
 	PRIMARY KEY (measure_name, hospital_name)
 );
 
@@ -35,7 +35,9 @@ CREATE TABLE state(
 	num_of_hosp_worse INTEGER,
 	num_of_hosp_same INTEGER,
 	num_of_hosp_better INTEGER,
-	PRIMARY KEY (name, measure_name)
+	start_date TIMESTAMP,
+	end_date TIMESTAMP,
+	PRIMARY KEY (name, measure_name, start_date, end_date)
 );
 
 CREATE TABLE death(
