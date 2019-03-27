@@ -34,7 +34,7 @@ def measurementInsert(myDBname):
         for i in range(len(hosp_name)):
             
             try:
-                record_to_insert = (hosp_name[i], address[i], measure_name[i], measure_id[i], denominator[i], score[i], le[i], he[i], sy[i], ey[i])
+                record_to_insert = (hosp_name[i], address2[i], measure_name[i], measure_id[i], denominator[i], score[i], le[i], he[i], sy[i], ey[i])
                 cursor.execute(postgres_insert_query, record_to_insert)
                 connection.commit()
             except(Exception, psycopg2.Error) as error:
