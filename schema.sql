@@ -16,15 +16,16 @@ CREATE TABLE hospital(
 );
 
 CREATE TABLE measurement(
+	hospital_name VARCHAR(255),
+	address VARCHAR(255),
 	measure_name VARCHAR(255),
 	measure_id VARCHAR(255),
+	denominator INTEGER,
 	score FLOAT,
-	hospital_name VARCHAR(255),
 	lower_estimate FLOAT,
 	higher_estimate FLOAT,
 	start_year INTEGER,
 	end_year INTEGER,
-	denominator INTEGER,
 	PRIMARY KEY (measure_name, hospital_name)
 );
 
@@ -41,7 +42,7 @@ CREATE TABLE death(
 	cause_name  VARCHAR(255),
 	year INTEGER,
 	deaths INTEGER,
-	age_adjusted_death_rate FLOAT
-	State_name VARCHAR(255),
+	age_adjusted_death_rate FLOAT,
+	state_name VARCHAR(255)
 
 );
