@@ -10,9 +10,8 @@ CREATE TABLE hospital(
 	city VARCHAR(255),
 	state VARCHAR(255),
 	zipcode INTEGER,
-	phone VARCHAR(11),
 	county_name VARCHAR(255),
- 	PRIMARY KEY (name)
+ 	PRIMARY KEY (name, address)
 );
 
 CREATE TABLE measurement(
@@ -26,7 +25,7 @@ CREATE TABLE measurement(
 	higher_estimate FLOAT,
 	start_date TIMESTAMP,
 	end_date TIMESTAMP,
-	PRIMARY KEY (measure_name, hospital_name)
+	PRIMARY KEY (measure_name, hospital_name, start_date, end_date)
 );
 
 CREATE TABLE state(
@@ -35,9 +34,7 @@ CREATE TABLE state(
 	num_of_hosp_worse INTEGER,
 	num_of_hosp_same INTEGER,
 	num_of_hosp_better INTEGER,
-	start_date TIMESTAMP,
-	end_date TIMESTAMP,
-	PRIMARY KEY (name, measure_name, start_date, end_date)
+	PRIMARY KEY (name, measure_name)
 );
 
 CREATE TABLE death(
@@ -46,5 +43,4 @@ CREATE TABLE death(
 	deaths INTEGER,
 	age_adjusted_death_rate FLOAT,
 	state_name VARCHAR(255)
-
 );
