@@ -16,3 +16,9 @@ The objective of this project is to find the relationship between the hospital r
 - go to the database `hospital`
 - run `\i /.../schema.sql`
 5. Quit psql and Run `python load_data.py` in terminal. 	
+
+## Data
+1. Hospital General Information.csv
+2. Complications and Deaths - Hospital.csv
+3. Complications and Deaths - State.csv
+4. NCHS_-_Leading_Causes_of_Death__United_States.csv
