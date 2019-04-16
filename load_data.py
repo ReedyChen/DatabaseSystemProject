@@ -21,7 +21,6 @@ def hospitalInsert(myDBname):
         print (str(count) + " record(s) inserted successfully into hospital table")
     except (Exception, psycopg2.Error) as error :
         print("Failed to insert record into hospital table", error)
-    connection.close()
 
 # measurement table insert
 def measurementInsert(myDBname):
@@ -44,7 +43,6 @@ def measurementInsert(myDBname):
         print (str(count) + " record(s) inserted successfully into measurement table")
     except (Exception, psycopg2.Error) as error :
         print("Failed to insert record into measurement table", error)
-    connection.close()
 
 # state table insert      
 def stateInsert(myDBname):
@@ -66,7 +64,6 @@ def stateInsert(myDBname):
         print (str(count) + " record(s) inserted successfully into state table")
     except (Exception, psycopg2.Error) as error :
         print("Failed to insert record into state table", error)
-    connection.close()
 
 # death table insert      
 def deathInsert(myDBname):
@@ -89,7 +86,6 @@ def deathInsert(myDBname):
         print (str(count) + " records inserted successfully into death table")
     except (Exception, psycopg2.Error) as error :
         print("Failed to insert record into death table", error)
-    connection.close()    
 
 
 with open('Hospital General Information.csv') as csv_file:
