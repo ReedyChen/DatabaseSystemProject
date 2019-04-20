@@ -48,11 +48,18 @@ def best_ten_state(state):
     records = cursor.fetchall()
     return records   
 
-#def death_rate_rank_hospital(cause,year):
-    #cursor.execute("SELECT state_name,age_adjusted_death_rate FROM death WHERE year = %s AND cause_name =%s ORDER BY age_adjusted_death_rate LIMIT 1", (year,cause_name))
-    #records = cursor.fetchall()
-    #return records
-	
+#choose the lowest death rate state first, then choose the best hospital
+#need fix
+def death_rate_rank_hospital(cause,year):
+    cursor.execute("SELECT state_name FROM death WHERE year = %s AND cause_name =%s ORDER BY age_adjusted_death_rate LIMIT 1", (year,cause_name))
+    records = cursor.fetchone()
+    #maybe need to change dataloading to make state the same(AL,Alabama)
+    state = records[0][0:2].upper()  #need fix
+    cursor.execute("SELECT hospital_name FROM measurement,hospital WHERE hospital_name = name AND state=%s GROUP BY hospital_name ORDER BY AVG(score) DESC LIMIT 1",(state,))
+    final = cursor.fetchone()
+    return final[0]
+
+#need verification and app.route	
 # given state and city, return all the hopstial in that city with informations ---return:(name, address, phone, zipcode)
 def hospital_info(s,c):
     cursor.execute("SELECT name, address, phone, zipcode FROM hospital WHERE state=s AND city=c")
@@ -62,13 +69,14 @@ def hospital_info(s,c):
 # No.1 hospital based on measurement score (average) and death rate (deathrate first then avescore) ---return: (hospital_name, death_rate, average_score)
 def top_one_hospital():
     cursor.execute("SELECT hospital_name, age_adjusted_death_rate, avescore FROM death, (SELECT hospital_name,AVG(score) AS avescore,state FROM measurement,hospital WHERE hospital_name = name GROUP BY hospital_name, state ORDER BY AVG(score) DESC) WHERE state=state_name ORDER BY age_adjusted_death_rate, avescore DESC")
+    records = cursor.fetchall()
+    return records    
 
 
 @app.route('/')
 def index():
     conn.rollback()
     return render_template('index.html')
-
 
 @app.route("/select_from_state", methods=['GET','POST'])
 def search():
@@ -78,12 +86,41 @@ def search():
         mimetype="text/plain"
     )
 
+@app.route("/death_rate_rank", methods=['GET','POST'])
+def search1():
+    records = death_rate_rank(request.form['cause','year'])
+    return Response(
+        tabulate(records),
+        mimetype="text/plain"
+    )
 
-@app.route("/new-course", methods=['POST'])
-def new_course():
-    insert(request.form['course-name'], request.form['semester'])
-    cursor.execute("SELECT * FROM course")
-    records = cursor.fetchall()
+@app.route("/top_hospital_state", methods=['GET','POST'])
+def search2():
+    records = top_hospital_state(request.form['state','measurement'])
+    return Response(
+        tabulate(records),
+        mimetype="text/plain"
+    )
+
+@app.route("/best_ten", methods=['POST'])
+def search3():
+    records = best_ten()
+    return Response(
+        tabulate(records),
+        mimetype="text/plain"
+    )
+
+@app.route("/best_ten_state", methods=['GET','POST'])
+def search4():
+    records = best_ten_state(request.form['state'])
+    return Response(
+        tabulate(records),
+        mimetype="text/plain"
+    )
+
+@app.route("/death_rate_rank_hospital", methods=['GET','POST'])
+def search5():
+    records = death_rate_rank_hospital(request.form['cause','year'])
     return Response(
         tabulate(records),
         mimetype="text/plain"
