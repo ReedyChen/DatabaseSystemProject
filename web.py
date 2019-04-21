@@ -87,6 +87,8 @@ def search():
 @app.route("/death_rate_rank", methods=['GET','POST'])
 def search1():
     records = death_rate_rank(request.form['cause'], request.form['year'])
+    if len(records) == 0:
+        return Response("No record for given year")
     return Response(
         tabulate(records, ['State Name', 'Death Rate'], "simple"),
         mimetype="text/plain"
@@ -104,7 +106,7 @@ def search2():
 def search3():
     records = best_ten()
     return Response(
-        tabulate(records),
+        tabulate(records, ['Hospital Name', 'Score'], "simple"),
         mimetype="text/plain"
     )
 
