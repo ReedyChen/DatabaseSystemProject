@@ -259,6 +259,57 @@
                                     </div>
 
                                 </div>
+
+                                <br />
+
+                                <div style="background-color: #80788D ; padding: 18px;" class="w3-content w3-container w3-padding-32" id="about">
+                                        <h3>Death Rate Rank</h3>
+                                        <p> PROVIDE SOME EXPLANATIONS???????</p>
+                                 
+                                        <form method="POST" action="death_rate_rank_hospital">
+                                            <label for="causes"><i class="fa fa-map-marker" style="width:15px"></i>Cause<br /></label>
+                                            <!-- <label for="causes">Select your cause and year:</label> -->
+                                            <select type="text" name="cause" id="causes">
+                                                <option value="Alzheimer's disease">Alzheimer's disease</option>
+                                                <option value="Influenza and pneumonia">Influenza and pneumonia</option>
+                                                <option value="Cancer">Cancer</option>
+                                                <option value="Heart disease">Heart disease</option>
+                                                <option value="Diabetes">Diabetes</option>
+                                                <option value="Stroke">Stroke</option>
+                                                <option value="Kidney disease">Kidney disease</option>
+                                                <option value="Unintentional injuries">Unintentional injuries</option>
+                                                <option value="Suicide">Suicide</option>
+                                                <option value="All causes">All causes</option>
+                                                <option value="CLRD">CLRD</option>
+                                            </select>
+                                            
+                                            <label for="year"><br /><br /><i class="fa fa-map-marker" style="width:15px"></i>Year<br /></label>
+                                            <select type="text" name="year" id="yearid">
+                                                <option value="2017">2017</option>
+                                                <option value="2016">2016</option>
+                                                <option value="2015">2015</option>
+                                                <option value="2014">2014</option>
+                                                <option value="2013">2013</option>
+                                                <option value="2012">2012</option>
+                                                <option value="2011">2011</option>
+                                                <option value="2010">2010</option>
+                                                <option value="2009">2009</option>
+                                                <option value="2008">2008</option>
+                                                <option value="2007">2007</option>
+                                                <option value="2006">2006</option>
+                                                <option value="2005">2005</option>
+                                                <option value="2004">2004</option>
+                                                <option value="2003">2003</option>
+                                                <option value="2002">2002</option>
+                                                <option value="2001">2001</option>
+                                                <option value="2000">2000</option>
+                                                <option value="1999">1999</option>
+                                            </select>
+                                            <br /> <br />
+                                            <input class="w3-button w3-white w3-border w3-round-large" style="width:120px" type="submit" value="Search"/>
+                                        </form>
+                                        
+                                    </div>
                                 
                                 <script>
                                     // Open and close sidebar
@@ -266,9 +317,9 @@
                                         document.getElementById("mySidebar").style.width = "100%";
                                         document.getElementById("mySidebar").style.display = "block";
                                     }
-                                function w3_close() {
-                                    document.getElementById("mySidebar").style.display = "none";
-                                }
+                                    function w3_close() {
+                                        document.getElementById("mySidebar").style.display = "none";
+                                    }
                                 </script>
                                 
                             </body>

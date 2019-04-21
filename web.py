@@ -50,7 +50,7 @@ def best_ten_state(state):
 
 #choose the lowest death rate state first, then choose the best hospital
 def death_rate_rank_hospital(cause,year):
-    cursor.execute("SELECT state_name FROM death WHERE year = %s AND cause_name =%s ORDER BY age_adjusted_death_rate LIMIT 1", (year,cause_name))
+    cursor.execute("SELECT state_name FROM death WHERE year = %s AND cause_name =%s ORDER BY age_adjusted_death_rate LIMIT 1", (year,cause))
     records = cursor.fetchone()
     state = records[0]
     cursor.execute("SELECT hospital_name FROM measurement,hospital WHERE hospital_name = name AND state=%s GROUP BY hospital_name ORDER BY AVG(score) DESC LIMIT 1",(state,))
