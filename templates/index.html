@@ -32,6 +32,7 @@
                                         <h1 class=" w3-jumbo">
                                             HOSPITAL SEARCHER
                                         </h1>
+                                        <h5> The objective of this project is to find the relationship between the hospital rating and the death rate of multiple types of diseases within the same area. </h5>
                                     </header>
                                 </div>
                                 <br />
@@ -40,7 +41,7 @@
                                     
                                     <div style="background-color: #696969 ; padding: 18px;" class="w3-content w3-container w3-padding-32" id="about">
                                         <h3 text="#ffffff" >Top 10 Hospitals Search</h3>
-                                        <h5> Select your state to find the best hospitals!</h5>
+                                        <h5> Select your state to find the best hospitals.</h5>
                                         
                                         
                                         <form method="POST" action="best_ten_state">
@@ -105,7 +106,7 @@
                                     <br />
                                     <div style="background-color: #949FB1 ; padding: 18px;" class="w3-content w3-container w3-padding-32" id="about">
                                         <h3> Top 10 Hospitals Advance Search </h3>
-                                        <h5> Select your measurement and state to find the best hospitals!</h5>
+                                        <h5> Select your state and measurement to find the best hospitals.</h5>
                                         
                                         <form method="POST" action="top_hospital_state">
                                             <label for="top_10_states"><i class="fa fa-map-marker" style="width:15px"></i>State<br /></label>
@@ -162,7 +163,7 @@
                                                 <option value="WI">Wisconsin</option>
                                                 <option value="WY">Wyoming</option>
                                             </select>
-                                            <label for="top_10_states"><br /><br /><i class="fa fa-map-marker" style="width:15px"></i>Measurement<br /></label>
+                                            <label for="top_10_states"><br /><br /><i class="fa fa-child" style="width:15px"></i>Measurement<br /></label>
                                             <select type="text" name="measurement" id="top_10_measure">
                                                 <option value="Serious blood clots after surgery">Serious blood clots after surgery</option>
                                                 <option value="Perioperative Hemorrhage or Hematoma Rate">Perioperative Hemorrhage or Hematoma Rate</option>
@@ -199,7 +200,7 @@
                                         <p> PROVIDE SOME EXPLANATIONS???????</p>
                                         
                                         <form method="POST" action="death_rate_rank">
-                                            <label for="causes"><i class="fa fa-map-marker" style="width:15px"></i>Cause<br /></label>
+                                            <label for="causes"><i class="fa fa-male" style="width:15px"></i>Cause<br /></label>
                                             <!-- <label for="causes">Select your cause and year:</label> -->
                                             <select type="text" name="cause" id="causes">
                                                 <option value="Alzheimer's disease">Alzheimer's disease</option>
@@ -215,9 +216,8 @@
                                                 <option value="CLRD">CLRD</option>
                                             </select>
                                             
-                                            <label for="year"><br /><br /><i class="fa fa-map-marker" style="width:15px"></i>Year<br /></label>
+                                            <label for="year"><br /><br /><i class="fa fa-calendar-o" style="width:15px"></i> Year<br /></label>
                                             <select type="text" name="year" id="yearid">
-                                                <option value="2017">2017</option>
                                                 <option value="2016">2016</option>
                                                 <option value="2015">2015</option>
                                                 <option value="2014">2014</option>
@@ -255,9 +255,6 @@
                                         
                                     </div>
                                     
-                                    <div class="w3-content w3-container w3-padding-64" id="about">
-                                    </div>
-                                    
                                 </div>
                                 
                                 <br />
@@ -267,7 +264,7 @@
                                     <p> PROVIDE SOME EXPLANATIONS???????</p>
                                     
                                     <form method="POST" action="death_rate_rank_hospital">
-                                        <label for="causes"><i class="fa fa-map-marker" style="width:15px"></i>Cause<br /></label>
+                                        <label for="causes"><i class="fa fa-male" style="width:15px"></i>Cause<br /></label>
                                         <!-- <label for="causes">Select your cause and year:</label> -->
                                         <select type="text" name="cause" id="causes">
                                             <option value="Alzheimer's disease">Alzheimer's disease</option>
@@ -283,9 +280,8 @@
                                             <option value="CLRD">CLRD</option>
                                         </select>
                                         
-                                        <label for="year"><br /><br /><i class="fa fa-map-marker" style="width:15px"></i>Year<br /></label>
+                                        <label for="year"><br /><br /><i class="fa fa-calendar-o" style="width:15px"></i>  Year<br /></label>
                                         <select type="text" name="year" id="yearid">
-                                            <option value="2017">2017</option>
                                             <option value="2016">2016</option>
                                             <option value="2015">2015</option>
                                             <option value="2014">2014</option>
@@ -309,6 +305,9 @@
                                         <input class="w3-button w3-white w3-border w3-round-large" style="width:120px" type="submit" value="Search"/>
                                     </form>
                                     
+                                </div>
+
+                                <div class="w3-content w3-container w3-padding-64" id="about">
                                 </div>
                                 
                                 <script>

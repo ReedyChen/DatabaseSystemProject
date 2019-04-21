@@ -53,8 +53,10 @@ def death_rate_rank_hospital(cause,year):
     #SELECT hospital_name, TRUNC(AVG(CAST(score as float)),2) FROM measurement,hospital WHERE hospital_name = name AND state='HI' GROUP BY hospital_name ORDER BY AVG(score) DESC LIMIT 10
     cursor.execute("SELECT state_name FROM death WHERE year = %s AND cause_name =%s ORDER BY age_adjusted_death_rate LIMIT 1", (year,cause))
     records = cursor.fetchall()
+    if len(records) == 0:
+        return records
     state = records[0]
-    cursor.execute("SELECT hospital_name,  AVG(score) FROM measurement,hospital WHERE hospital_name = name AND state='HI' GROUP BY hospital_name ORDER BY AVG(score) DESC LIMIT 10",(state,))
+    cursor.execute("SELECT hospital_name,  AVG(score) FROM measurement,hospital WHERE hospital_name = name AND state=%s GROUP BY hospital_name ORDER BY AVG(score) DESC LIMIT 10",(state,))
     final = cursor.fetchall()
     return final
 
@@ -122,6 +124,8 @@ def search4():
 @app.route("/death_rate_rank_hospital", methods=['GET','POST'])
 def search5():
     records = death_rate_rank_hospital(request.form['cause'], request.form['year'])
+    if len(records) == 0:
+        return Response("No record for given year")
     return Response(
                     tabulate(records),
                     mimetype="text/plain"
