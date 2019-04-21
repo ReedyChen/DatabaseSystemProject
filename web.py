@@ -25,8 +25,8 @@ def insert(name, semester):
     conn.commit()
 	
 #given cause and year, select top 10 states that have the lowest death rate ---return:(state_name, deathrate)
-def death_rate_rank(cause,year):
-    cursor.execute("SELECT state_name,age_adjusted_death_rate FROM death WHERE year = %s AND cause_name =%s ORDER BY age_adjusted_death_rate LIMIT 10", (year,cause_name))
+def death_rate_rank(cause, year):
+    cursor.execute("SELECT state_name,age_adjusted_death_rate FROM death WHERE year = %s AND cause_name =%s ORDER BY age_adjusted_death_rate LIMIT 10", (year, cause))
     records = cursor.fetchall()
     return records
 
@@ -88,17 +88,17 @@ def search():
 
 @app.route("/death_rate_rank", methods=['GET','POST'])
 def search1():
-    records = death_rate_rank(request.form['cause','year'])
+    records = death_rate_rank(request.form['cause'], request.form['year'])
     return Response(
-        tabulate(records),
+        tabulate(records, ['State Name', 'Death Rate'], "simple"),
         mimetype="text/plain"
     )
 
 @app.route("/top_hospital_state", methods=['GET','POST'])
 def search2():
-    records = top_hospital_state(request.form['state','measurement'])
+    records = top_hospital_state(request.form['state'], request.form['measurement'])
     return Response(
-        tabulate(records),
+        tabulate(records, ['Hospital Name', 'Score'], "simple"),
         mimetype="text/plain"
     )
 
@@ -114,13 +114,13 @@ def search3():
 def search4():
     records = best_ten_state(request.form['state'])
     return Response(
-        tabulate(records),
+        tabulate(records, ['Hospital Name', 'Score'], "simple"),
         mimetype="text/plain"
     )
 
 @app.route("/death_rate_rank_hospital", methods=['GET','POST'])
 def search5():
-    records = death_rate_rank_hospital(request.form['cause','year'])
+    records = death_rate_rank_hospital(request.form['cause'], request.form['year'])
     return Response(
         tabulate(records),
         mimetype="text/plain"
