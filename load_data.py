@@ -2,10 +2,12 @@ import csv
 import psycopg2
 import config
 
+state_abbr = {'Alabama':'AL','Alaska':'AK','Arizona': 'AZ','Arkansas':'AR','California':'CA','Colorado':'CO','Connecticut':'CT','District of Columbia':'DC','Delaware':'DE','Florida':'FL','Georgia':'GA','Hawaii':'HI','Idaho':'ID','Illinois':'IL','Indiana':'IN','Iowa':'IA','Kansas':'KS','Kentucky':'KY','Louisiana':'LA','Maine':'ME','Maryland':'MD','Massachusetts':'MA','Michigan':'MI','Minnesota':'MN','Mississippi':'MS','Missouri':'MO','Montana':'MT','Nebraska':'NE','Nevada':'NV','New Hampshire':'NH','New Jersey':'NJ','New Mexico':'NM','New York':'NY','North Carolina':'NC','North Dakota':'ND','Ohio':'OH','Oklahoma':'OK','Oregon':'OR','Pennsylvania':'PA','Rhode Island':'RI','South Carolina':'SC','South Dakota':'SD','Tennessee':'TN','Texas':'TX','Utah':'UT','Vermont':'VT','Virginia':'VA','Washington':'WA','West Virginia':'WV','Wisconsin':'WI','Wyoming':'WY','United States':'US'}
+
 # hospital table insert
 def hospitalInsert(myDBname):
     try:
-        connection = psycopg2.connect(dbname = myDBname)
+        connection = psycopg2.connect(myDBname)
         cursor = connection.cursor()
         count = 0
         postgres_insert_query = """ INSERT INTO hospital (name, address, city, state, zipcode, county_name) VALUES (%s,%s,%s,%s,%s,%s)"""
@@ -25,7 +27,7 @@ def hospitalInsert(myDBname):
 # measurement table insert
 def measurementInsert(myDBname):
     try:
-        connection = psycopg2.connect(dbname = myDBname)
+        connection = psycopg2.connect(myDBname)
         cursor = connection.cursor()
         count = 0
         # measurement insert 
@@ -47,7 +49,7 @@ def measurementInsert(myDBname):
 # state table insert      
 def stateInsert(myDBname):
     try:
-        connection = psycopg2.connect(dbname = myDBname)
+        connection = psycopg2.connect(myDBname)
         cursor = connection.cursor()
         count = 0
         # measurement insert 
@@ -68,7 +70,7 @@ def stateInsert(myDBname):
 # death table insert      
 def deathInsert(myDBname):
     try:
-        connection = psycopg2.connect(dbname = myDBname)
+        connection = psycopg2.connect(myDBname)
         cursor = connection.cursor()
         count = 0
         # measurement insert 
@@ -253,7 +255,7 @@ with open('NCHS_-_Leading_Causes_of_Death__United_States.csv') as csv_file:
                 elif (i == n4):
                     age_adj_death_rate.append(row[i])    
                 elif (i == n5):
-                    state_name2.append(row[i])                       
+                    state_name2.append(state_abbr[row[i]])                       
 
         line_count += 1
 
@@ -261,7 +263,7 @@ with open('NCHS_-_Leading_Causes_of_Death__United_States.csv') as csv_file:
 # *** create your own database named as whatever you want ***
 # *** then run the query "schema.sql" in your data base ***
 
-database_name = "hospital" # change the var name to your database name
+database_name = "host='localhost' dbname='hospital' user='hospital' password='hospital'" # change the var name to your database name
 hospitalInsert(database_name)
 measurementInsert(database_name)
 stateInsert(database_name)
