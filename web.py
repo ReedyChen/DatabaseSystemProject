@@ -38,7 +38,7 @@ def top_hospital_state(state,measurement):
 
 # select top 10 hospitals (overall) based on the avrage score ---(hospital_name, average_score)
 def best_ten():
-    cursor.execute("SELECT hospital_name,AVG(score) FROM measurement GROUP BY hospital_name ORDER BY AVG(score) DESC LIMIT 10")
+    cursor.execute("select a.hospital_name, hospital.state, a.score from (SELECT hospital_name, AVG(score) as score FROM measurement GROUP BY hospital_name ORDER BY AVG(score) DESC LIMIT 10) as a, hospital where hospital.name = a.hospital_name")
     records = cursor.fetchall()
     return records
 
@@ -109,7 +109,7 @@ def search2():
 def search3():
     records = best_ten()
     return Response(
-                    tabulate(records, ['Hospital Name', 'Score'], "simple"),
+                    tabulate(records, ['Hospital Name', 'State', 'Score'], "simple"),
                     mimetype="text/plain"
                     )
 
