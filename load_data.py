@@ -263,7 +263,7 @@ with open('NCHS_-_Leading_Causes_of_Death__United_States.csv') as csv_file:
 # *** create your own database named as whatever you want ***
 # *** then run the query "schema.sql" in your data base ***
 
-database_name = "host='localhost' dbname='hospital' user='hospital' password='hospital'" # change the var name to your database name
+database_name = "host='localhost' dbname='hospital'" # change the var name to your database name
 hospitalInsert(database_name)
 measurementInsert(database_name)
 stateInsert(database_name)

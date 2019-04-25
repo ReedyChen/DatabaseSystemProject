@@ -24,39 +24,39 @@ def insert(name, semester):
     cursor.execute(query)
     conn.commit()
 
-#given cause and year, select top 10 states that have the lowest death rate ---return:(state_name, deathrate)
+#given cause and year, select top 20 states that have the lowest death rate ---return:(state_name, deathrate)
 def death_rate_rank(cause, year):
-    cursor.execute("SELECT state_name,age_adjusted_death_rate FROM death WHERE year = %s AND cause_name =%s ORDER BY age_adjusted_death_rate LIMIT 10", (year, cause))
+    cursor.execute("SELECT state_name,age_adjusted_death_rate FROM death WHERE year = %s AND cause_name =%s ORDER BY age_adjusted_death_rate", (year, cause))
     records = cursor.fetchall()
     return records
 
-# select top 10 hospitals given state and measure name based on their scores ---return:(hospital_name, score)
+# select top 20 hospitals given state and measure name based on their scores ---return:(hospital_name, score)
 def top_hospital_state(state,measurement):
-    cursor.execute("SELECT hospital_name,score FROM measurement,hospital WHERE hospital_name = name AND state = %s AND measure_name = %s ORDER BY score DESC LIMIT 10", (state,measurement))
+    cursor.execute("SELECT hospital_name,score FROM measurement,hospital WHERE hospital_name = name AND state = %s AND measure_name = %s ORDER BY score DESC LIMIT 20", (state,measurement))
     records = cursor.fetchall()
     return records
 
-# select top 10 hospitals (overall) based on the avrage score ---(hospital_name, average_score)
+# select top 20 hospitals (overall) based on the avrage score ---(hospital_name, average_score)
 def best_ten():
-    cursor.execute("select a.hospital_name, hospital.state, a.score from (SELECT hospital_name, AVG(score) as score FROM measurement GROUP BY hospital_name ORDER BY AVG(score) DESC LIMIT 10) as a, hospital where hospital.name = a.hospital_name")
+    cursor.execute("select a.hospital_name, hospital.state, a.score from (SELECT hospital_name, AVG(score) as score FROM measurement GROUP BY hospital_name ORDER BY AVG(score) DESC LIMIT 20) as a, hospital where hospital.name = a.hospital_name")
     records = cursor.fetchall()
     return records
 
-# select top 10 hospitals given a state (in that state) based on avrage score ---return:(hospital_name, average_score)
+# select top 20 hospitals given a state (in that state) based on avrage score ---return:(hospital_name, average_score)
 def best_ten_state(state):
-    cursor.execute("SELECT hospital_name,AVG(score) FROM measurement,hospital WHERE hospital_name = name AND state=%s GROUP BY hospital_name ORDER BY AVG(score) DESC LIMIT 10",(state,))
+    cursor.execute("SELECT hospital_name,AVG(score) FROM measurement,hospital WHERE hospital_name = name AND state=%s GROUP BY hospital_name ORDER BY AVG(score) DESC LIMIT 20",(state,))
     records = cursor.fetchall()
     return records
 
 #choose the lowest death rate state first, then choose the best hospital
 def death_rate_rank_hospital(cause,year):
-    #SELECT hospital_name, TRUNC(AVG(CAST(score as float)),2) FROM measurement,hospital WHERE hospital_name = name AND state='HI' GROUP BY hospital_name ORDER BY AVG(score) DESC LIMIT 10
+    #SELECT hospital_name, TRUNC(AVG(CAST(score as float)),2) FROM measurement,hospital WHERE hospital_name = name AND state='HI' GROUP BY hospital_name ORDER BY AVG(score) DESC LIMIT 20
     cursor.execute("SELECT state_name FROM death WHERE year = %s AND cause_name =%s ORDER BY age_adjusted_death_rate LIMIT 1", (year,cause))
     records = cursor.fetchall()
     if len(records) == 0:
         return records
     state = records[0]
-    cursor.execute("SELECT hospital_name,  AVG(score) FROM measurement,hospital WHERE hospital_name = name AND state=%s GROUP BY hospital_name ORDER BY AVG(score) DESC LIMIT 10",(state,))
+    cursor.execute("SELECT hospital_name,  AVG(score) FROM measurement,hospital WHERE hospital_name = name AND state=%s GROUP BY hospital_name ORDER BY AVG(score) DESC LIMIT 20",(state,))
     final = cursor.fetchall()
     return final
 
@@ -127,6 +127,6 @@ def search5():
     if len(records) == 0:
         return Response("No record for given year")
     return Response(
-                    tabulate(records),
+                    tabulate(records, ['Hospital Name', 'Score'], "simple"),
                     mimetype="text/plain"
                     )
