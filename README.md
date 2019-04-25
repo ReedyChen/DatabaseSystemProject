@@ -2,7 +2,7 @@
 
 ## Objective
 
-The objective of this project is to find the relationship between the hospital rating and the death rate of multiple types of diseases within the same area. By using the attributes these two data sets shared — city, state, and zip code, we can calculate the multiplier of rating and death rate of each disease. Thus, we could find out which disease is closely related to hospital quality and which are not. The result could be used for the patient to choose which hospital is most suitable for his/her treatment or recovery.
+The objective of this project is to find the relationship between the hospital rating and the death rate of multiple types of diseases within the same area. By using the attributes these two data sets shared — city, state, and zip code, we can calculate the multiplier of rating and death rate of each disease. Thus, we could find out which disease are closely related to hospital quality and which are not. The result could be used for the patient to choose which hospital is most suitable for his/her treatment or recovery.
 
 ## Data files
 1. Hospital General Information.csv
@@ -26,7 +26,7 @@ The objective of this project is to find the relationship between the hospital r
 1. Install tabulate using `pip install tabulate`.
 2. Install flask using `pip install flask`.
 3. At the file directory, run `export FLASK_APP=web.py`
-4. Then run `Flask run`, then open `http://127.0.0.1:5000` in your web browser, this should open the app
+4. Then run `Flask run`, and open `http://127.0.0.1:5000` in your web browser, this should open the app
 
 ## Notice
 Any data which is not avalible in the database is assigend with value of -1.
